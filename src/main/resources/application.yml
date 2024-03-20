@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: hackaton
+  datasource:
+    url: ${database.url}
+    username: ${database.username}
+    password: ${database.password}
+    driver-class-name: ${database.driver-class-name}
+  profiles:
+    active: ${APP_PROFILE:local}
+

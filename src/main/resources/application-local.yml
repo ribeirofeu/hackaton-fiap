@@ -1,0 +1,11 @@
+database:
+  username: hackaton
+  password: hackaton
+  url: jdbc:mysql://localhost:3306/hackaton
+  driver-class-name: com.mysql.cj.jdbc.Driver
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
