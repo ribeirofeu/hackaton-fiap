@@ -9,3 +9,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+auth:
+  key: a2cc00ad-bb6c-415c-a4a2-75de2f00c794

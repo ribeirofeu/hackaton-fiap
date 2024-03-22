@@ -9,3 +9,7 @@ spring:
   profiles:
     active: ${APP_PROFILE:local}
 
+api:
+  security:
+    token:
+      secret: ${auth.key}
