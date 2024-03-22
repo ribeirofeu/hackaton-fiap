@@ -1,52 +1,59 @@
 package com.hackaton.hackton.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.hackaton.hackton.model.DailyRecord;
-import com.hackaton.hackton.model.DailyReport;
 import com.hackaton.hackton.model.Report;
-import com.hackaton.hackton.model.entity.RegisterEntity;
-import com.hackaton.hackton.repository.RegisterRepository;
 import com.hackaton.hackton.service.ClockRegisterService;
 import com.hackaton.hackton.service.ReportService;
+import com.hackaton.hackton.utils.ExcelGenerator;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.*;
+
+import com.hackaton.hackton.utils.ResendEmail;
+import com.hackaton.hackton.utils.Utils;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.TemporalAdjusters;
-import java.util.*;
+import javax.swing.*;
 
 @Service
+@Log4j2
 public class ReportServiceImpl implements ReportService {
 
   @Autowired
-  ClockRegisterService clockRegisterService;
+  private ClockRegisterService clockRegisterService;
+
+  @Autowired
+  private ResendEmail resendEmail;
 
   @Override
-  public void generateReport(UUID userId, Long month, Long year) {
-    // TODO: Find USER By USER ID
-    String email = "mock@gmail.com";
+  public void generateReport(UUID userId, int month, int year) {
 
-    LocalDate currentDate = LocalDate.now();
-
-    // Get the first day of the previous month
-    LocalDate firstDayOfLastMonth = currentDate.minusMonths(1).withDayOfMonth(1);
-
-    // Get the last day of the previous month
-    LocalDate lastDayOfLastMonth = currentDate.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
-
-    Report lastMonthReport = clockRegisterService.getRegisters(firstDayOfLastMonth, lastDayOfLastMonth, userId);
+      String file = "relatorio.xlsx";
 
     try {
-      var mapper = new ObjectMapper();
-      mapper.registerModule(new JavaTimeModule());
-      String stringReport = mapper.writeValueAsString(lastMonthReport);
-      System.out.print(stringReport);
-    } catch (JsonProcessingException e) {
+      // TODO: Find USER By USER ID
+      String email = "ribeiro.feu@gmail.com";
+
+      LocalDate startDate = YearMonth.of(year, month).atDay(1);
+      LocalDate finalDate = YearMonth.of(year, month).atEndOfMonth();
+
+      log.info("Generate Report - startDate {} - finalDate {}", startDate, finalDate);
+
+      Report monthReport = clockRegisterService.getRegisters(startDate, finalDate, userId);
+
+      ExcelGenerator excelGenerator = new ExcelGenerator();
+
+      excelGenerator.generateExcel(monthReport, file);
+      resendEmail.sendEmail(file, "relatorio_mensal.xlsx", email);
+
+    } catch (IOException e) {
       throw new RuntimeException(e);
+    }finally{
+        Utils.deleteIfExists(file);
     }
   }
 }

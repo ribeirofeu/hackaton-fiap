@@ -59,6 +59,9 @@ public class ClockRegisterServiceImpl implements ClockRegisterService {
                     DailyReport dailyReport1 = generateDailyReport(date, result);
                     report.addDaily(dailyReport1);
                 });
+
+        report.getDailyReport().sort(Comparator.comparing(DailyReport::getDay));
+
         return report;
     }
 

@@ -23,7 +23,7 @@ public class ClockRegisterController {
     return ResponseEntity.ok(service.register(request, userId));
   }
 
-  @GetMapping("/view-registers")
+  @GetMapping
   ResponseEntity<Report> viewRegisters(
           @RequestHeader("User-ID") UUID userId,
           @RequestParam LocalDate startDate,

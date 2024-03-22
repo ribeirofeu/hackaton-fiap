@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface ReportService {
 
-    void generateReport(UUID userId, Long month, Long year);
+    void generateReport(UUID userId, int month, int year);
 
 }
