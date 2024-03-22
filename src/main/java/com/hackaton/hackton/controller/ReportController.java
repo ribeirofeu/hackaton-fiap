@@ -11,17 +11,22 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/clock-report")
 public class ReportController {
 
   @Autowired private ReportService service;
 
-  @GetMapping
-  ResponseEntity<Report> getReport(
-      @RequestHeader("User-ID") UUID userId,
-      @RequestParam LocalDate startDate,
-      LocalDate finalDate) {
 
-    return ResponseEntity.ok(service.genereteReport(startDate, finalDate, userId));
+
+  @GetMapping("/clock-report")
+  ResponseEntity<String> getClockReport(@RequestHeader("User-ID") UUID userId) {
+
+    /**
+     * Get Report String -> Generate report
+     * Send Email (ReportString)
+     */
+
+    service.generateReport(userId, 0L, 0L);
+    return ResponseEntity.ok("Report gerado com sucesso");
   }
 }
+
