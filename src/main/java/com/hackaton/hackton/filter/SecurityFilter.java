@@ -34,14 +34,12 @@ public class SecurityFilter extends OncePerRequestFilter {
     private void authenticateUserFromToken(HttpServletRequest request,  HttpServletResponse response) throws IOException {
         var token = this.recoverToken(request);
         if (token != null) {
-            return;
+            var username = tokenService.validateToken(token).getSubject();
+            UserDetails user = userDetailsService.loadUserByUsername(username);
+
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-
-        var username = tokenService.validateToken(token).getSubject();
-        UserDetails user = userDetailsService.loadUserByUsername(username);
-
-        var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private String recoverToken(HttpServletRequest request) {

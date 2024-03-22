@@ -23,7 +23,7 @@ public class AuthenticationController {
             LoginResponse response = this.authService.login(data);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Erro ao realizar login");
         }
     }
 

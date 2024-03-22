@@ -54,13 +54,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "password_updated_at")
     private OffsetDateTime passwordUpdatedAt;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private OffsetDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private OffsetDateTime updatedAt;
 
 
     @Override

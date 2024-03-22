@@ -43,6 +43,6 @@ public class JwtTokenService {
     }
 
     private Instant genExpirationDate(){
-        return Instant.now().plus(10, ChronoUnit.SECONDS);
+        return Instant.now().plus(1, ChronoUnit.DAYS);
     }
 }

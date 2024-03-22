@@ -8,7 +8,10 @@ spring:
     driver-class-name: ${database.driver-class-name}
   profiles:
     active: ${APP_PROFILE:local}
-
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 api:
   security:
     token:
