@@ -1,5 +1,6 @@
 package com.hackaton.hackton.controller;
 
+import com.hackaton.hackton.model.Report;
 import com.hackaton.hackton.model.dto.RegisterRequestDTO;
 import com.hackaton.hackton.model.dto.RegisterResponseDTO;
 import com.hackaton.hackton.service.ClockRegisterService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
@@ -19,5 +21,14 @@ public class ClockRegisterController {
   public ResponseEntity<RegisterResponseDTO> register(
       @RequestBody RegisterRequestDTO request, @RequestHeader("User-ID") UUID userId) {
     return ResponseEntity.ok(service.register(request, userId));
+  }
+
+  @GetMapping("/view-registers")
+  ResponseEntity<Report> viewRegisters(
+          @RequestHeader("User-ID") UUID userId,
+          @RequestParam LocalDate startDate,
+          LocalDate finalDate) {
+
+    return ResponseEntity.ok(service.getRegisters(startDate, finalDate, userId));
   }
 }
