@@ -1,6 +1,7 @@
 package com.hackaton.hackton.repository;
 
 
+import com.hackaton.hackton.model.Email;
 import com.hackaton.hackton.model.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    @Query("SELECT u FROM UserEntity u WHERE u.email = :emailOrUsername OR u.username = :emailOrUsername")
-    Optional<UserEntity> findByEmailOrUsername(String emailOrUsername);
+
+    Optional<UserEntity> findByEmail(Email email);
 
 }
