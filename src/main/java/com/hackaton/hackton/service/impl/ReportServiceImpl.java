@@ -30,14 +30,11 @@ public class ReportServiceImpl implements ReportService {
   private ResendEmail resendEmail;
 
   @Override
-  public void generateReport(UUID userId, int month, int year) {
+  public void generateReport(UUID userId, String email, int month, int year) {
 
       String file = "relatorio.xlsx";
 
     try {
-      // TODO: Find USER By USER ID
-      String email = "ribeiro.feu@gmail.com";
-
       LocalDate startDate = YearMonth.of(year, month).atDay(1);
       LocalDate finalDate = YearMonth.of(year, month).atEndOfMonth();
 

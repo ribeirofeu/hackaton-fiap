@@ -17,7 +17,8 @@ public class ReportController {
   ResponseEntity<String> getClockReport(int month, int year) {
     UserEntity principal = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     UUID userId = principal.getId();
-    service.generateReport(userId, month, year);
+    String email = principal.getEmail().getAddress();
+    service.generateReport(userId, email, month, year);
     return ResponseEntity.ok("Report gerado com sucesso");
   }
 }
