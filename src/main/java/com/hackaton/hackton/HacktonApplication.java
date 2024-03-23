@@ -23,10 +23,10 @@ public class HacktonApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner() {
 		return args -> {
-			var optionalUser = userRepository.findByEmail(Email.of("teste@hackathon.com"));
+			var optionalUser = userRepository.findByEmail(Email.of("postech.fiap@outlook.com"));
 			if (optionalUser.isEmpty()) {
 				userRepository.save(UserEntity.builder()
-						.email(Email.of("teste@hackathon.com"))
+						.email(Email.of("postech.fiap@outlook.com"))
 						.name("Teste")
 						.username("teste")
 						.password(passwordEncoder.encode("123456"))
@@ -34,5 +34,4 @@ public class HacktonApplication {
 			}
 		};
 	}
-
 }
