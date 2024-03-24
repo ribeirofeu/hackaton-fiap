@@ -18,4 +18,4 @@ api:
       secret: ${auth.key}
 
 resend:
-  api-key: re_5SSeXYKZ_CwviF7do3o8KB1QRyPnEeMkV
+  api-key: ${RESEND_API_KEY}

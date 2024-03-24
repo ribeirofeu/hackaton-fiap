@@ -8,6 +8,9 @@ import com.hackaton.hackton.utils.ResendEmail;
 import com.hackaton.hackton.utils.Utils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -28,7 +31,9 @@ public class ReportServiceImpl implements ReportService {
     private static final String FILE = "relatorio.xlsx";
     private static final String ATTACHED_FILE = "relatorio_mensal.xlsx";
 
+    @Async
     @Override
+    @Retryable(backoff = @Backoff(delay = 1000, maxDelay = 5000, multiplier = 2), maxAttempts = 5)
     public void generateReport(UUID userId, String email, int month, int year) {
         try {
             LocalDate startDate = YearMonth.of(year, month).atDay(1);

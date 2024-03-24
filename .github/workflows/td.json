@@ -1,0 +1,59 @@
+{
+  "containerDefinitions": [
+    {
+      "name": "hackathon",
+      "image": "027260563052.dkr.ecr.us-east-1.amazonaws.com/hackathon",
+      "cpu": 1024,
+      "memoryReservation": 512,
+      "portMappings": [
+        {
+          "name": "port-hackathon",
+          "containerPort": 8080,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "ulimits": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/hackathon",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      },
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl -f localhost:8080/actuator/health || exit 1"
+        ],
+        "interval": 5,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 35
+      },
+      "systemControls": []
+    }
+  ],
+  "family": "hackathon",
+  "executionRoleArn": "arn:aws:iam::027260563052:role/ecsTaskExecutionRole",
+  "networkMode": "bridge",
+  "volumes": [],
+  "placementConstraints": [],
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "tags": []
+}
