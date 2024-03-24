@@ -62,8 +62,6 @@ jobs:
             DATABASE_PORT=${{ secrets.DATABASE_PORT }}
             DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
             DATABASE_USER=${{ secrets.DATABASE_USER }}
-            AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
-            AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
